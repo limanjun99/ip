@@ -8,7 +8,7 @@ public class Waddles {
     }
 
     public Waddles() {
-        items = new ArrayList<>();
+        tasks = new ArrayList<>();
     }
 
     /**
@@ -29,7 +29,7 @@ public class Waddles {
     }
 
     private static final String NAME = "Waddles";
-    private final ArrayList<String> items;
+    private final ArrayList<Task> tasks;
 
     /**
      * Handles a single line of input from the user.
@@ -41,15 +41,46 @@ public class Waddles {
             return true;
         } else if (input.equals("list")) {
             printList();
+        } else if (input.startsWith("mark ")) {
+            handleMark(input);
+        } else if (input.startsWith("unmark ")) {
+            handleUnmark(input);
         } else {
-            addItem(input);
-            printMessage(String.format("added: %s", input));
+            handleAddTask(input);
         }
         return false;
     }
 
-    private void addItem(String item) {
-        items.add(item);
+    /**
+     * Adds a new task with the given description.
+     */
+    private void handleAddTask(String description) {
+        tasks.add(new Task(description));
+        printMessage(String.format("added: %s", description));
+    }
+
+    /**
+     * Marks a task as done.
+     *
+     * @param input: Should have the format {@code mark <task_index>}.
+     */
+    private void handleMark(String input) {
+        // TODO: Handle invalid arguments.
+        int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
+        tasks.get(taskIndex).markDone();
+        printMessage(String.format("Nice! I've marked this task as done:\n%s", tasks.get(taskIndex)));
+    }
+
+    /**
+     * Unmarks a done task (i.e. sets it to be undone).
+     *
+     * @param input: Should have the format {@code unmark <task_index>}.
+     */
+    private void handleUnmark(String input) {
+        // TODO: Handle invalid arguments.
+        int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
+        tasks.get(taskIndex).markNotDone();
+        printMessage(String.format("Ok, I've marked this task as not done yet:\n%s", tasks.get(taskIndex)));
     }
 
     private void printGreeting() {
@@ -64,8 +95,8 @@ public class Waddles {
 
     private void printList() {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            builder.append(i + 1).append(". ").append(items.get(i)).append("\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            builder.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
         }
         printMessage(builder.toString());
     }
