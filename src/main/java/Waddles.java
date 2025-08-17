@@ -2,34 +2,44 @@ import java.util.Scanner;
 
 public class Waddles {
     public static void main(String[] args) {
-        printGreeting();
-        runInputLoop();
-        printFarewell();
+        Waddles waddles = new Waddles();
+        waddles.run();
     }
 
-    private static final String NAME = "Waddles";
+    public Waddles() {
+    }
 
-    private static void runInputLoop() {
+    /**
+     * Starts the Waddles chatbot.
+     * Listens to user input from stdin and responds appropriately to stdout.
+     */
+    public void run() {
+        printGreeting();
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
+            String input =  scanner.nextLine();
             if (input.equals("bye")) {
                 break;
             }
             handleInput(input);
         }
+
+        printFarewell();
     }
 
-    private static void handleInput(String input) {
+    private static final String NAME = "Waddles";
+
+    private void handleInput(String input) {
         printMessage(input);
     }
 
-    private static void printGreeting() {
+    private void printGreeting() {
         String greeting = String.format("Hello! I'm %s.\n" + "What can I do for you?", NAME);
         printMessage(greeting);
     }
 
-    private static void printFarewell() {
+    private void printFarewell() {
         String farewell = "Bye. Hope to see you again soon!";
         printMessage(farewell);
     }
@@ -38,7 +48,7 @@ public class Waddles {
      * Formats the message nicely and prints it to stdout.
      * Prefer this method for printing to keep output consistent.
      */
-    private static void printMessage(String message) {
+    private void printMessage(String message) {
         final String leftPadding = " ".repeat(4);
         final String horizontalLine = "-".repeat(80);
         System.out.println(leftPadding + horizontalLine);
