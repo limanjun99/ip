@@ -10,11 +10,11 @@
 public class Parser {
     public Parser(String input) {
         this.input = input;
-        this.command = input.isEmpty() ? "" : input.split(" ", 2)[0];
-        this.consumed = this.command.length() + 1;  // +1 to consume the space after the command.
+        this.command = input.isEmpty() ? Command.INVALID : Command.fromString(input.split(" ", 2)[0]);
+        this.consumed = this.command.toString().length() + 1;  // +1 to consume the space after the command.
     }
 
-    public String getCommand() {
+    public Command getCommand() {
         return command;
     }
 
@@ -60,6 +60,6 @@ public class Parser {
     }
 
     private final String input;
-    private final String command;
+    private final Command command;
     private int consumed;
 }

@@ -42,19 +42,19 @@ public class Waddles {
      */
     private boolean handleInput(String input) throws WaddlesException {
         Parser parser = new Parser(input);
-        String command = parser.getCommand();
+        Command command = parser.getCommand();
         switch (command) {
-            case "bye" -> {
+            case BYE -> {
                 return true;
             }
-            case "list" -> printList();
-            case "mark" -> handleMark(parser);
-            case "unmark" -> handleUnmark(parser);
-            case "todo" -> handleAddTodo(parser);
-            case "deadline" -> handleAddDeadline(parser);
-            case "event" -> handleAddEvent(parser);
-            case "delete" -> handleDelete(parser);
-            default -> throw new WaddlesException.InvalidCommand(command);
+            case LIST -> printList();
+            case MARK -> handleMark(parser);
+            case UNMARK -> handleUnmark(parser);
+            case TODO -> handleAddTodo(parser);
+            case DEADLINE -> handleAddDeadline(parser);
+            case EVENT -> handleAddEvent(parser);
+            case DELETE -> handleDelete(parser);
+            case INVALID -> throw new WaddlesException.InvalidCommand(command);
         }
         return false;
     }
