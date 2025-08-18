@@ -53,6 +53,7 @@ public class Waddles {
             case "todo" -> handleAddTodo(parser);
             case "deadline" -> handleAddDeadline(parser);
             case "event" -> handleAddEvent(parser);
+            case "delete" -> handleDelete(parser);
             default -> throw new WaddlesException.InvalidCommand(command);
         }
         return false;
@@ -124,6 +125,26 @@ public class Waddles {
         }
         tasks.get(taskIndex).markNotDone();
         printMessage(String.format("Ok, I've marked this task as not done yet:\n%s", tasks.get(taskIndex)));
+    }
+
+    /**
+     * Deletes a task.
+     * The user input should have the format {@code delete <task_index>}.
+     */
+    private void handleDelete(Parser parser) throws WaddlesException {
+        int taskIndex = parser.readIntegerArgument("task index", "") - 1;
+        if (taskIndex < 0 || taskIndex >= tasks.size()) {
+            throw new WaddlesException.InvalidArgument(
+                    parser.getCommand(),
+                    "task index",
+                    String.format("%d is out of" + " range of [1, %d]", taskIndex + 1, tasks.size()));
+        }
+        Task task = tasks.remove(taskIndex);
+        printMessage(String.format("""
+                        Noted. I've removed this task:
+                          %s
+                        Now you have %d tasks in the list."""
+                , task, tasks.size()));
     }
 
     private void printGreeting() {

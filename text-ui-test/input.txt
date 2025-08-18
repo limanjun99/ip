@@ -13,4 +13,6 @@ deadline return book /buy 12pm
 event project meeting /to 12pm
 mark -1
 unmark 9
+delete 1
+list
 bye
