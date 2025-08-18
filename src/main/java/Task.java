@@ -12,6 +12,7 @@ public class Task {
         isDone = false;
     }
 
+    @Override
     public String toString() {
         char doneMarker = isDone ? 'X' : ' ';
         return String.format("[%c] %s", doneMarker, description);

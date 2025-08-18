@@ -45,18 +45,58 @@ public class Waddles {
             handleMark(input);
         } else if (input.startsWith("unmark ")) {
             handleUnmark(input);
+        } else if (input.startsWith("todo ")) {
+            handleAddTodo(input);
+        } else if (input.startsWith("deadline ")) {
+            handleAddDeadline(input);
+        } else if (input.startsWith("event ")) {
+            handleAddEvent(input);
         } else {
-            handleAddTask(input);
+            printMessage("Invalid command");
         }
         return false;
     }
 
     /**
-     * Adds a new task with the given description.
+     * Adds a new Todo task.
+     *
+     * @param input: Should have the format {@code todo <task description>}.
      */
-    private void handleAddTask(String description) {
-        tasks.add(new Task(description));
-        printMessage(String.format("added: %s", description));
+    private void handleAddTodo(String input) {
+        String description = input.split(" ", 2)[1];
+        Todo todo = new Todo(description);
+        tasks.add(todo);
+        printAddedTask(todo);
+    }
+
+    /**
+     * Adds a new Deadline task.
+     *
+     * @param input: Should have the format {@code deadline <task description> /by <deadline>}.
+     */
+    private void handleAddDeadline(String input) {
+        String rawArguments = input.split(" ", 2)[1];
+        String[] arguments = rawArguments.split(" /by ", 2);
+        String description = arguments[0];
+        String by = arguments[1];
+        Deadline deadline = new Deadline(description, by);
+        tasks.add(deadline);
+        printAddedTask(deadline);
+    }
+
+    /**
+     * Adds a new Event task.
+     *
+     * @param input: Should have the format {@code event <task description> /from <start> /to <end>}.
+     */
+    private void handleAddEvent(String input) {
+        String rawArguments = input.split(" ", 2)[1];
+        String description = rawArguments.split(" /from ", 2)[0];
+        String from = rawArguments.split(" /from ", 2)[1].split(" /to ", 2)[0];
+        String to = rawArguments.split(" /to ", 2)[1];
+        Event event = new Event(description, from, to);
+        tasks.add(event);
+        printAddedTask(event);
     }
 
     /**
@@ -99,6 +139,13 @@ public class Waddles {
             builder.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
         }
         printMessage(builder.toString());
+    }
+
+    private void printAddedTask(Task task) {
+        printMessage(String.format("""
+                Got it. I've added this task:
+                  %s
+                Now you have %d tasks in the list.""", task, tasks.size()));
     }
 
     /**
