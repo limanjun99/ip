@@ -22,7 +22,11 @@ public class Waddles {
         boolean isDone = false;
         while (!isDone) {
             String input = scanner.nextLine();
-            isDone = handleInput(input);
+            try {
+                isDone = handleInput(input);
+            } catch (WaddlesException e) {
+                printError(e);
+            }
         }
 
         printFarewell();
@@ -36,7 +40,7 @@ public class Waddles {
      *
      * @return Whether this input should make Waddles exit.
      */
-    private boolean handleInput(String input) {
+    private boolean handleInput(String input) throws WaddlesException {
         Parser parser = new Parser(input);
         String command = parser.getCommand();
         switch (command) {
@@ -49,7 +53,7 @@ public class Waddles {
             case "todo" -> handleAddTodo(parser);
             case "deadline" -> handleAddDeadline(parser);
             case "event" -> handleAddEvent(parser);
-            default -> printError(String.format("\"%s\" is not a valid command.", command));
+            default -> throw new WaddlesException.InvalidCommand(command);
         }
         return false;
     }
@@ -58,7 +62,7 @@ public class Waddles {
      * Adds a new Todo task.
      * The user input should have the format {@code todo <task description>}.
      */
-    private void handleAddTodo(Parser parser) {
+    private void handleAddTodo(Parser parser) throws WaddlesException {
         String description = parser.readArgument("task description", "");
         Todo todo = new Todo(description);
         tasks.add(todo);
@@ -69,7 +73,7 @@ public class Waddles {
      * Adds a new Deadline task.
      * The user input should have the format {@code deadline <task description> /by <deadline>}.
      */
-    private void handleAddDeadline(Parser parser) {
+    private void handleAddDeadline(Parser parser) throws WaddlesException {
         String description = parser.readArgument("task description", " /by ");
         String by = parser.readArgument("deadline (/by)", "");
         Deadline deadline = new Deadline(description, by);
@@ -81,7 +85,7 @@ public class Waddles {
      * Adds a new Event task.
      * The user input should have the format {@code event <task description> /from <start> /to <end>}.
      */
-    private void handleAddEvent(Parser parser) {
+    private void handleAddEvent(Parser parser) throws WaddlesException {
         String description = parser.readArgument("task description", " /from ");
         String from = parser.readArgument("from (/from)", " /to ");
         String to = parser.readArgument("to (/to)", "");
@@ -94,8 +98,14 @@ public class Waddles {
      * Marks a task as done.
      * The user input should have the format {@code mark <task_index>}.
      */
-    private void handleMark(Parser parser) {
+    private void handleMark(Parser parser) throws WaddlesException {
         int taskIndex = parser.readIntegerArgument("task index", "") - 1;
+        if (taskIndex < 0 || taskIndex >= tasks.size()) {
+            throw new WaddlesException.InvalidArgument(
+                    parser.getCommand(),
+                    "task index",
+                    String.format("%d is out of" + " range of [1, %d]", taskIndex + 1, tasks.size()));
+        }
         tasks.get(taskIndex).markDone();
         printMessage(String.format("Nice! I've marked this task as done:\n%s", tasks.get(taskIndex)));
     }
@@ -104,8 +114,14 @@ public class Waddles {
      * Unmarks a done task (i.e. sets it to be undone).
      * The user input should have the format {@code unmark <task_index>}.
      */
-    private void handleUnmark(Parser parser) {
+    private void handleUnmark(Parser parser) throws WaddlesException {
         int taskIndex = parser.readIntegerArgument("task index", "") - 1;
+        if (taskIndex < 0 || taskIndex >= tasks.size()) {
+            throw new WaddlesException.InvalidArgument(
+                    parser.getCommand(),
+                    "task index",
+                    String.format("%d is out of" + " range of [1, %d]", taskIndex + 1, tasks.size()));
+        }
         tasks.get(taskIndex).markNotDone();
         printMessage(String.format("Ok, I've marked this task as not done yet:\n%s", tasks.get(taskIndex)));
     }
@@ -153,7 +169,7 @@ public class Waddles {
      * Formats the error nicely and prints it to stdout.
      * Prefer this method for printing to keep output consistent.
      */
-    private void printError(String error) {
-        printMessage(String.format("ERROR:\n%s", error));
+    private void printError(WaddlesException error) {
+        printMessage(String.format("ERROR:\n%s", error.getMessage()));
     }
 }

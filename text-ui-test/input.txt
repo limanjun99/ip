@@ -5,4 +5,12 @@ list
 mark 1
 mark 2
 unmark 1
+blah
+mark not_an_integer
+unmark not_an_integer
+todo
+deadline return book /buy 12pm
+event project meeting /to 12pm
+mark -1
+unmark 9
 bye

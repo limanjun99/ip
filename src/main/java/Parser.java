@@ -24,10 +24,22 @@ public class Parser {
      * @param argument  Describes the current argument being read.
      * @param delimiter Delimiter to read until (empty if reading until the end).
      */
-    public String readArgument(String argument, String delimiter) {
+    public String readArgument(String argument, String delimiter) throws WaddlesException {
+        if (consumed >= this.input.length()) {
+            throw new WaddlesException.MissingArgument(command, argument);
+        }
         int argumentEnd = delimiter.isEmpty() ? input.length() : input.indexOf(delimiter, consumed);
+        if (argumentEnd == -1) {
+            // If delimiter is missing, just consume all remaining input.
+            // We will throw on the next call to this function when the user tries to read the next argument,
+            // and we find that we consumed everything.
+            argumentEnd = input.length();
+        }
         String argumentValue = input.substring(consumed, argumentEnd);
         consumed = argumentEnd + delimiter.length();
+        if (argumentValue.isEmpty()) {
+            throw new WaddlesException.MissingArgument(command, argument);
+        }
         return argumentValue;
     }
 
@@ -37,9 +49,14 @@ public class Parser {
      * @param argument  Describes the current argument being read.
      * @param delimiter Delimiter to read until (empty if reading until the end).
      */
-    public int readIntegerArgument(String argument, String delimiter) {
+    public int readIntegerArgument(String argument, String delimiter) throws WaddlesException {
         String rawArgument = readArgument(argument, delimiter);
-        return Integer.parseInt(rawArgument);
+        try {
+            return Integer.parseInt(rawArgument);
+        } catch (NumberFormatException e) {
+            throw new WaddlesException.InvalidArgument(command, argument, String.format("expected integer, got %s",
+                    rawArgument));
+        }
     }
 
     private final String input;
