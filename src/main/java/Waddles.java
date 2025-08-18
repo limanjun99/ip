@@ -37,33 +37,29 @@ public class Waddles {
      * @return Whether this input should make Waddles exit.
      */
     private boolean handleInput(String input) {
-        if (input.equals("bye")) {
-            return true;
-        } else if (input.equals("list")) {
-            printList();
-        } else if (input.startsWith("mark ")) {
-            handleMark(input);
-        } else if (input.startsWith("unmark ")) {
-            handleUnmark(input);
-        } else if (input.startsWith("todo ")) {
-            handleAddTodo(input);
-        } else if (input.startsWith("deadline ")) {
-            handleAddDeadline(input);
-        } else if (input.startsWith("event ")) {
-            handleAddEvent(input);
-        } else {
-            printMessage("Invalid command");
+        Parser parser = new Parser(input);
+        String command = parser.getCommand();
+        switch (command) {
+            case "bye" -> {
+                return true;
+            }
+            case "list" -> printList();
+            case "mark" -> handleMark(parser);
+            case "unmark" -> handleUnmark(parser);
+            case "todo" -> handleAddTodo(parser);
+            case "deadline" -> handleAddDeadline(parser);
+            case "event" -> handleAddEvent(parser);
+            default -> printError(String.format("\"%s\" is not a valid command.", command));
         }
         return false;
     }
 
     /**
      * Adds a new Todo task.
-     *
-     * @param input: Should have the format {@code todo <task description>}.
+     * The user input should have the format {@code todo <task description>}.
      */
-    private void handleAddTodo(String input) {
-        String description = input.split(" ", 2)[1];
+    private void handleAddTodo(Parser parser) {
+        String description = parser.readArgument("task description", "");
         Todo todo = new Todo(description);
         tasks.add(todo);
         printAddedTask(todo);
@@ -71,14 +67,11 @@ public class Waddles {
 
     /**
      * Adds a new Deadline task.
-     *
-     * @param input: Should have the format {@code deadline <task description> /by <deadline>}.
+     * The user input should have the format {@code deadline <task description> /by <deadline>}.
      */
-    private void handleAddDeadline(String input) {
-        String rawArguments = input.split(" ", 2)[1];
-        String[] arguments = rawArguments.split(" /by ", 2);
-        String description = arguments[0];
-        String by = arguments[1];
+    private void handleAddDeadline(Parser parser) {
+        String description = parser.readArgument("task description", " /by ");
+        String by = parser.readArgument("deadline (/by)", "");
         Deadline deadline = new Deadline(description, by);
         tasks.add(deadline);
         printAddedTask(deadline);
@@ -86,14 +79,12 @@ public class Waddles {
 
     /**
      * Adds a new Event task.
-     *
-     * @param input: Should have the format {@code event <task description> /from <start> /to <end>}.
+     * The user input should have the format {@code event <task description> /from <start> /to <end>}.
      */
-    private void handleAddEvent(String input) {
-        String rawArguments = input.split(" ", 2)[1];
-        String description = rawArguments.split(" /from ", 2)[0];
-        String from = rawArguments.split(" /from ", 2)[1].split(" /to ", 2)[0];
-        String to = rawArguments.split(" /to ", 2)[1];
+    private void handleAddEvent(Parser parser) {
+        String description = parser.readArgument("task description", " /from ");
+        String from = parser.readArgument("from (/from)", " /to ");
+        String to = parser.readArgument("to (/to)", "");
         Event event = new Event(description, from, to);
         tasks.add(event);
         printAddedTask(event);
@@ -101,24 +92,20 @@ public class Waddles {
 
     /**
      * Marks a task as done.
-     *
-     * @param input: Should have the format {@code mark <task_index>}.
+     * The user input should have the format {@code mark <task_index>}.
      */
-    private void handleMark(String input) {
-        // TODO: Handle invalid arguments.
-        int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
+    private void handleMark(Parser parser) {
+        int taskIndex = parser.readIntegerArgument("task index", "") - 1;
         tasks.get(taskIndex).markDone();
         printMessage(String.format("Nice! I've marked this task as done:\n%s", tasks.get(taskIndex)));
     }
 
     /**
      * Unmarks a done task (i.e. sets it to be undone).
-     *
-     * @param input: Should have the format {@code unmark <task_index>}.
+     * The user input should have the format {@code unmark <task_index>}.
      */
-    private void handleUnmark(String input) {
-        // TODO: Handle invalid arguments.
-        int taskIndex = Integer.parseInt(input.split(" ")[1]) - 1;
+    private void handleUnmark(Parser parser) {
+        int taskIndex = parser.readIntegerArgument("task index", "") - 1;
         tasks.get(taskIndex).markNotDone();
         printMessage(String.format("Ok, I've marked this task as not done yet:\n%s", tasks.get(taskIndex)));
     }
@@ -160,5 +147,13 @@ public class Waddles {
             System.out.println(leftPadding + line);
         }
         System.out.println(leftPadding + horizontalLine);
+    }
+
+    /**
+     * Formats the error nicely and prints it to stdout.
+     * Prefer this method for printing to keep output consistent.
+     */
+    private void printError(String error) {
+        printMessage(String.format("ERROR:\n%s", error));
     }
 }
