@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Waddles {
@@ -8,7 +7,7 @@ public class Waddles {
     }
 
     public Waddles() {
-        tasks = new ArrayList<>();
+        tasks = new Tasks();
     }
 
     /**
@@ -33,7 +32,7 @@ public class Waddles {
     }
 
     private static final String NAME = "Waddles";
-    private final ArrayList<Task> tasks;
+    private final Tasks tasks;
 
     /**
      * Handles a single line of input from the user.
@@ -100,12 +99,7 @@ public class Waddles {
      * The user input should have the format {@code mark <task_index>}.
      */
     private void handleMark(Parser parser) throws WaddlesException {
-        int taskIndex = parser.readIntegerArgument("task index", "") - 1;
-        if (taskIndex < 0 || taskIndex >= tasks.size()) {
-            throw new WaddlesException.InvalidArgument(
-                    "task index",
-                    String.format("%d is out of" + " range of [1, %d]", taskIndex + 1, tasks.size()));
-        }
+        int taskIndex = parser.readIntegerArgument("task index", "");
         tasks.get(taskIndex).markDone();
         printMessage(String.format("Nice! I've marked this task as done:\n%s", tasks.get(taskIndex)));
     }
@@ -115,12 +109,7 @@ public class Waddles {
      * The user input should have the format {@code unmark <task_index>}.
      */
     private void handleUnmark(Parser parser) throws WaddlesException {
-        int taskIndex = parser.readIntegerArgument("task index", "") - 1;
-        if (taskIndex < 0 || taskIndex >= tasks.size()) {
-            throw new WaddlesException.InvalidArgument(
-                    "task index",
-                    String.format("%d is out of" + " range of [1, %d]", taskIndex + 1, tasks.size()));
-        }
+        int taskIndex = parser.readIntegerArgument("task index", "");
         tasks.get(taskIndex).markNotDone();
         printMessage(String.format("Ok, I've marked this task as not done yet:\n%s", tasks.get(taskIndex)));
     }
@@ -130,12 +119,7 @@ public class Waddles {
      * The user input should have the format {@code delete <task_index>}.
      */
     private void handleDelete(Parser parser) throws WaddlesException {
-        int taskIndex = parser.readIntegerArgument("task index", "") - 1;
-        if (taskIndex < 0 || taskIndex >= tasks.size()) {
-            throw new WaddlesException.InvalidArgument(
-                    "task index",
-                    String.format("%d is out of" + " range of [1, %d]", taskIndex + 1, tasks.size()));
-        }
+        int taskIndex = parser.readIntegerArgument("task index", "");
         Task task = tasks.remove(taskIndex);
         printMessage(String.format("""
                         Noted. I've removed this task:
@@ -156,8 +140,8 @@ public class Waddles {
 
     private void printList() {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < tasks.size(); i++) {
-            builder.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
+        for (int i = 1; i <= tasks.size(); i++) {
+            builder.append(i).append(". ").append(tasks.getUnchecked(i)).append("\n");
         }
         printMessage(builder.toString());
     }
