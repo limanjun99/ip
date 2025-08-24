@@ -44,17 +44,17 @@ public class Waddles {
         Parser parser = new Parser(input);
         Command command = parser.getCommand();
         switch (command) {
-            case BYE -> {
-                return true;
-            }
-            case LIST -> printList();
-            case MARK -> handleMark(parser);
-            case UNMARK -> handleUnmark(parser);
-            case TODO -> handleAddTodo(parser);
-            case DEADLINE -> handleAddDeadline(parser);
-            case EVENT -> handleAddEvent(parser);
-            case DELETE -> handleDelete(parser);
-            case INVALID -> throw new WaddlesException.InvalidCommand(command);
+        case BYE -> {
+            return true;
+        }
+        case LIST -> printList();
+        case MARK -> handleMark(parser);
+        case UNMARK -> handleUnmark(parser);
+        case TODO -> handleAddTodo(parser);
+        case DEADLINE -> handleAddDeadline(parser);
+        case EVENT -> handleAddEvent(parser);
+        case DELETE -> handleDelete(parser);
+        case INVALID -> throw new WaddlesException.InvalidCommand(command);
         }
         return false;
     }
