@@ -54,7 +54,7 @@ public class Waddles {
         case DEADLINE -> handleAddDeadline(parser);
         case EVENT -> handleAddEvent(parser);
         case DELETE -> handleDelete(parser);
-        case INVALID -> throw new WaddlesException.InvalidCommand(command);
+        case INVALID -> throw new WaddlesException.InvalidCommand(input);
         }
         return false;
     }
@@ -103,7 +103,6 @@ public class Waddles {
         int taskIndex = parser.readIntegerArgument("task index", "") - 1;
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new WaddlesException.InvalidArgument(
-                    parser.getCommand(),
                     "task index",
                     String.format("%d is out of" + " range of [1, %d]", taskIndex + 1, tasks.size()));
         }
@@ -119,7 +118,6 @@ public class Waddles {
         int taskIndex = parser.readIntegerArgument("task index", "") - 1;
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new WaddlesException.InvalidArgument(
-                    parser.getCommand(),
                     "task index",
                     String.format("%d is out of" + " range of [1, %d]", taskIndex + 1, tasks.size()));
         }
@@ -135,7 +133,6 @@ public class Waddles {
         int taskIndex = parser.readIntegerArgument("task index", "") - 1;
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new WaddlesException.InvalidArgument(
-                    parser.getCommand(),
                     "task index",
                     String.format("%d is out of" + " range of [1, %d]", taskIndex + 1, tasks.size()));
         }

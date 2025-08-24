@@ -1,23 +1,23 @@
 public class WaddlesException extends Exception {
-    public WaddlesException(Command command, String message) {
-        super(String.format("Failed to run \"%s\" command: %s", command, message));
+    public WaddlesException(String message) {
+        super(message);
     }
 
     public static class InvalidCommand extends WaddlesException {
-        public InvalidCommand(Command command) {
-            super(command, "Invalid command.");
+        public InvalidCommand(String command) {
+            super(String.format("Invalid command: \"%s\".", command));
         }
     }
 
     public static class MissingArgument extends WaddlesException {
-        public MissingArgument(Command command, String argument) {
-            super(command, String.format("Missing argument %s.", argument));
+        public MissingArgument(String argument) {
+            super(String.format("Missing argument %s.", argument));
         }
     }
 
     public static class InvalidArgument extends WaddlesException {
-        public InvalidArgument(Command command, String argument, String reason) {
-            super(command, String.format("Argument \"%s\" is invalid (%s).", argument, reason));
+        public InvalidArgument(String argument, String reason) {
+            super(String.format("Argument \"%s\" is invalid (%s)", argument, reason));
         }
     }
 }

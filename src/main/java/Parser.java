@@ -26,7 +26,7 @@ public class Parser {
      */
     public String readArgument(String argument, String delimiter) throws WaddlesException {
         if (consumed >= this.input.length()) {
-            throw new WaddlesException.MissingArgument(command, argument);
+            throw new WaddlesException.MissingArgument(argument);
         }
         int argumentEnd = delimiter.isEmpty() ? input.length() : input.indexOf(delimiter, consumed);
         if (argumentEnd == -1) {
@@ -38,7 +38,7 @@ public class Parser {
         String argumentValue = input.substring(consumed, argumentEnd);
         consumed = argumentEnd + delimiter.length();
         if (argumentValue.isEmpty()) {
-            throw new WaddlesException.MissingArgument(command, argument);
+            throw new WaddlesException.MissingArgument(argument);
         }
         return argumentValue;
     }
@@ -54,7 +54,7 @@ public class Parser {
         try {
             return Integer.parseInt(rawArgument);
         } catch (NumberFormatException e) {
-            throw new WaddlesException.InvalidArgument(command, argument, String.format("expected integer, got %s",
+            throw new WaddlesException.InvalidArgument(argument, String.format("expected integer, got %s",
                     rawArgument));
         }
     }

@@ -36,35 +36,35 @@
     --------------------------------------------------------------------------------
     --------------------------------------------------------------------------------
     ERROR:
-    Failed to run "blah" command: Invalid command.
+    Invalid command: "blah".
     --------------------------------------------------------------------------------
     --------------------------------------------------------------------------------
     ERROR:
-    Failed to run "mark" command: Argument "task index" is invalid (expected integer, got not_an_integer).
+    Argument "task index" is invalid (expected integer, got not_an_integer)
     --------------------------------------------------------------------------------
     --------------------------------------------------------------------------------
     ERROR:
-    Failed to run "unmark" command: Argument "task index" is invalid (expected integer, got not_an_integer).
+    Argument "task index" is invalid (expected integer, got not_an_integer)
     --------------------------------------------------------------------------------
     --------------------------------------------------------------------------------
     ERROR:
-    Failed to run "todo" command: Missing argument task description.
+    Missing argument task description.
     --------------------------------------------------------------------------------
     --------------------------------------------------------------------------------
     ERROR:
-    Failed to run "deadline" command: Missing argument deadline (/by).
+    Missing argument deadline (/by).
     --------------------------------------------------------------------------------
     --------------------------------------------------------------------------------
     ERROR:
-    Failed to run "event" command: Missing argument from (/from).
+    Missing argument from (/from).
     --------------------------------------------------------------------------------
     --------------------------------------------------------------------------------
     ERROR:
-    Failed to run "mark" command: Argument "task index" is invalid (-1 is out of range of [1, 3]).
+    Argument "task index" is invalid (-1 is out of range of [1, 3])
     --------------------------------------------------------------------------------
     --------------------------------------------------------------------------------
     ERROR:
-    Failed to run "unmark" command: Argument "task index" is invalid (9 is out of range of [1, 3]).
+    Argument "task index" is invalid (9 is out of range of [1, 3])
     --------------------------------------------------------------------------------
     --------------------------------------------------------------------------------
     Noted. I've removed this task:
