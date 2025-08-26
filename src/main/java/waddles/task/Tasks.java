@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Represents a lists of tasks.
+ * Note that this data structure is 1-indexed.
  */
 public class Tasks {
     public Tasks() {
