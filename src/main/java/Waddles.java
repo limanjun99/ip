@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public class Waddles {
     public static void main(String[] args) {
@@ -78,7 +79,7 @@ public class Waddles {
      */
     private void handleAddDeadline(Parser parser) throws WaddlesException {
         String description = parser.readArgument("task description", " /by ");
-        String by = parser.readArgument("deadline (/by)", "");
+        LocalDateTime by = parser.readDateTimeArgument("deadline (/by)", "");
         Deadline deadline = new Deadline(description, false, by);
         tasks.add(deadline);
         printAddedTask(deadline);
@@ -90,8 +91,8 @@ public class Waddles {
      */
     private void handleAddEvent(Parser parser) throws WaddlesException {
         String description = parser.readArgument("task description", " /from ");
-        String from = parser.readArgument("from (/from)", " /to ");
-        String to = parser.readArgument("to (/to)", "");
+        LocalDateTime from = parser.readDateTimeArgument("from (/from)", " /to ");
+        LocalDateTime to = parser.readDateTimeArgument("to (/to)", "");
         Event event = new Event(description, false, from, to);
         tasks.add(event);
         printAddedTask(event);

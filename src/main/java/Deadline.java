@@ -1,7 +1,16 @@
+import java.time.LocalDateTime;
+
 public class Deadline extends Task {
-    public Deadline(String description, boolean isDone, String by) {
+    public Deadline(String description, boolean isDone, LocalDateTime by) {
         super(description, isDone);
         this.by = by;
+    }
+
+    /**
+     * Returns a formatted string of when this deadline is due by.
+     */
+    public String getByString() {
+        return this.by.format(Task.outputDateTimeFormatter);
     }
 
     /**
@@ -12,7 +21,7 @@ public class Deadline extends Task {
         String[] fields = Task.splitSerialized(serialized);
         boolean isDone = fields[1].equals("1");
         String description = fields[2];
-        String by = fields[3];
+        LocalDateTime by = LocalDateTime.parse(fields[3], Task.outputDateTimeFormatter);
         return new Deadline(description, isDone, by);
     }
 
@@ -30,13 +39,13 @@ public class Deadline extends Task {
      */
     @Override
     public String toSerializedString() {
-        return String.format("D | %s | %s", super.toSerializedString(), by);
+        return String.format("D | %s | %s", super.toSerializedString(), getByString());
     }
 
     @Override
     public String toString() {
-        return String.format("[D]%s (by: %s)", super.toString(), by);
+        return String.format("[D]%s (by: %s)", super.toString(), getByString());
     }
 
-    private final String by;
+    private final LocalDateTime by;
 }

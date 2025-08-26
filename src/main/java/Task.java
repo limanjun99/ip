@@ -1,3 +1,4 @@
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public abstract class Task {
@@ -5,6 +6,11 @@ public abstract class Task {
         this.description = description;
         this.isDone = isDone;
     }
+
+    public static final String inputDateTimeFormat = "yyyy-MM-dd HH:mm";
+    public static final DateTimeFormatter inputDateTimeFormatter = DateTimeFormatter.ofPattern(inputDateTimeFormat);
+    public static final String outputDateTimeFormat = "MMM dd yyyy HH:mm";
+    public static final DateTimeFormatter outputDateTimeFormatter = DateTimeFormatter.ofPattern(outputDateTimeFormat);
 
     /**
      * Marks this task as done / undone.

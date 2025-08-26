@@ -1,6 +1,6 @@
 todo read book
-deadline return book /by Sunday 2pm
-event project meeting /from Monday 1pm /to 2pm
+deadline return book /by 2019-12-02 15:00
+event project meeting /from 2019-10-15 19:30 /to 2019-10-15 20:30
 list
 mark 1
 mark 2
@@ -9,10 +9,12 @@ blah
 mark not_an_integer
 unmark not_an_integer
 todo
-deadline return book /buy 12pm
-event project meeting /to 12pm
+deadline return book /buy 2025-01-01 13:00
+event project meeting /to 2025-01-01 13:00
 mark -1
 unmark 9
 delete 1
 list
+delete 1
+delete 1
 bye
