@@ -1,3 +1,7 @@
+package waddles.task;
+
+import waddles.WaddlesException;
+
 import java.util.ArrayList;
 
 /**
