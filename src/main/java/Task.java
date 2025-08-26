@@ -1,15 +1,32 @@
-public class Task {
-    Task(String description) {
+import java.util.Arrays;
+
+public abstract class Task {
+    public Task(String description, boolean isDone) {
         this.description = description;
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
-    public void markDone() {
-        isDone = true;
+    /**
+     * Marks this task as done / undone.
+     */
+    public void setDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
-    public void markNotDone() {
-        isDone = false;
+    /**
+     * Splits the given serialization of some Task into its fields.
+     * E.g. <code>"isDone | description"</code> becomes <code>[isDone, description]</code>.
+     */
+    public static String[] splitSerialized(String serialized) {
+        return Arrays.stream(serialized.split("\\|")).map(String::strip).toArray(String[]::new);
+    }
+
+    /**
+     * Returns a serialization of this task.
+     * Serialization format: <code>isDone | description</code>.
+     */
+    public String toSerializedString() {
+        return String.format("%d | %s", isDone ? 1 : 0, description);
     }
 
     @Override

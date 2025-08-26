@@ -7,7 +7,8 @@ public class Waddles {
     }
 
     public Waddles() {
-        tasks = new Tasks();
+        saveFile = new SaveFile();
+        tasks = saveFile.load();
     }
 
     /**
@@ -23,6 +24,7 @@ public class Waddles {
             String input = scanner.nextLine();
             try {
                 isDone = handleInput(input);
+                saveFile.save(tasks);
             } catch (WaddlesException e) {
                 printError(e);
             }
@@ -33,6 +35,7 @@ public class Waddles {
 
     private static final String NAME = "Waddles";
     private final Tasks tasks;
+    private final SaveFile saveFile;
 
     /**
      * Handles a single line of input from the user.
@@ -64,7 +67,7 @@ public class Waddles {
      */
     private void handleAddTodo(Parser parser) throws WaddlesException {
         String description = parser.readArgument("task description", "");
-        Todo todo = new Todo(description);
+        Todo todo = new Todo(description, false);
         tasks.add(todo);
         printAddedTask(todo);
     }
@@ -76,7 +79,7 @@ public class Waddles {
     private void handleAddDeadline(Parser parser) throws WaddlesException {
         String description = parser.readArgument("task description", " /by ");
         String by = parser.readArgument("deadline (/by)", "");
-        Deadline deadline = new Deadline(description, by);
+        Deadline deadline = new Deadline(description, false, by);
         tasks.add(deadline);
         printAddedTask(deadline);
     }
@@ -89,7 +92,7 @@ public class Waddles {
         String description = parser.readArgument("task description", " /from ");
         String from = parser.readArgument("from (/from)", " /to ");
         String to = parser.readArgument("to (/to)", "");
-        Event event = new Event(description, from, to);
+        Event event = new Event(description, false, from, to);
         tasks.add(event);
         printAddedTask(event);
     }
@@ -100,7 +103,7 @@ public class Waddles {
      */
     private void handleMark(Parser parser) throws WaddlesException {
         int taskIndex = parser.readIntegerArgument("task index", "");
-        tasks.get(taskIndex).markDone();
+        tasks.get(taskIndex).setDone(true);
         printMessage(String.format("Nice! I've marked this task as done:\n%s", tasks.get(taskIndex)));
     }
 
@@ -110,7 +113,7 @@ public class Waddles {
      */
     private void handleUnmark(Parser parser) throws WaddlesException {
         int taskIndex = parser.readIntegerArgument("task index", "");
-        tasks.get(taskIndex).markNotDone();
+        tasks.get(taskIndex).setDone(false);
         printMessage(String.format("Ok, I've marked this task as not done yet:\n%s", tasks.get(taskIndex)));
     }
 
