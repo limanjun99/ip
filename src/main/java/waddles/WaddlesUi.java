@@ -1,3 +1,5 @@
+package waddles;
+
 public class WaddlesUi {
     private static final String NAME = "Waddles";
 

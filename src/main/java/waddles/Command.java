@@ -1,3 +1,5 @@
+package waddles;
+
 public enum Command {
     BYE("bye"),
     LIST("list"),
@@ -26,7 +28,7 @@ public enum Command {
         return this.name;
     }
 
-    private Command(String name) {
+    Command(String name) {
         this.name = name;
     }
 
