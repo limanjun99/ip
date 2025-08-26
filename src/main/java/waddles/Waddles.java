@@ -1,5 +1,7 @@
 package waddles;
 
+import waddles.task.*;
+
 import java.util.Scanner;
 import java.time.LocalDateTime;
 

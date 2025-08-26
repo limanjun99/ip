@@ -1,4 +1,4 @@
-package waddles;
+package waddles.task;
 
 public class Todo extends Task {
     public Todo(String description, boolean isDone) {

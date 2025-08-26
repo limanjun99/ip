@@ -1,5 +1,8 @@
 package waddles;
 
+import waddles.task.Task;
+import waddles.task.Tasks;
+
 public class WaddlesUi {
     private static final String NAME = "Waddles";
 

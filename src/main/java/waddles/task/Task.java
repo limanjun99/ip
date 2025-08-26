@@ -1,4 +1,4 @@
-package waddles;
+package waddles.task;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
