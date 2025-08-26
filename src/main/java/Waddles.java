@@ -10,6 +10,7 @@ public class Waddles {
     public Waddles() {
         saveFile = new SaveFile();
         tasks = saveFile.load();
+        ui = new WaddlesUi();
     }
 
     /**
@@ -17,7 +18,7 @@ public class Waddles {
      * Listens to user input from stdin and responds appropriately to stdout.
      */
     public void run() {
-        printGreeting();
+        ui.printGreeting();
 
         Scanner scanner = new Scanner(System.in);
         boolean isDone = false;
@@ -27,16 +28,16 @@ public class Waddles {
                 isDone = handleInput(input);
                 saveFile.save(tasks);
             } catch (WaddlesException e) {
-                printError(e);
+                ui.printError(e);
             }
         }
 
-        printFarewell();
+        ui.printFarewell();
     }
 
-    private static final String NAME = "Waddles";
     private final Tasks tasks;
     private final SaveFile saveFile;
+    private final WaddlesUi ui;
 
     /**
      * Handles a single line of input from the user.
@@ -50,7 +51,7 @@ public class Waddles {
         case BYE -> {
             return true;
         }
-        case LIST -> printList();
+        case LIST -> ui.printTasks(tasks);
         case MARK -> handleMark(parser);
         case UNMARK -> handleUnmark(parser);
         case TODO -> handleAddTodo(parser);
@@ -70,7 +71,7 @@ public class Waddles {
         String description = parser.readArgument("task description", "");
         Todo todo = new Todo(description, false);
         tasks.add(todo);
-        printAddedTask(todo);
+        ui.printAddedTask(tasks, todo);
     }
 
     /**
@@ -82,7 +83,7 @@ public class Waddles {
         LocalDateTime by = parser.readDateTimeArgument("deadline (/by)", "");
         Deadline deadline = new Deadline(description, false, by);
         tasks.add(deadline);
-        printAddedTask(deadline);
+        ui.printAddedTask(tasks, deadline);
     }
 
     /**
@@ -95,7 +96,7 @@ public class Waddles {
         LocalDateTime to = parser.readDateTimeArgument("to (/to)", "");
         Event event = new Event(description, false, from, to);
         tasks.add(event);
-        printAddedTask(event);
+        ui.printAddedTask(tasks, event);
     }
 
     /**
@@ -104,8 +105,9 @@ public class Waddles {
      */
     private void handleMark(Parser parser) throws WaddlesException {
         int taskIndex = parser.readIntegerArgument("task index", "");
-        tasks.get(taskIndex).setDone(true);
-        printMessage(String.format("Nice! I've marked this task as done:\n%s", tasks.get(taskIndex)));
+        Task task = tasks.get(taskIndex);
+        task.setDone(true);
+        ui.printMarkedTask(task);
     }
 
     /**
@@ -114,8 +116,9 @@ public class Waddles {
      */
     private void handleUnmark(Parser parser) throws WaddlesException {
         int taskIndex = parser.readIntegerArgument("task index", "");
-        tasks.get(taskIndex).setDone(false);
-        printMessage(String.format("Ok, I've marked this task as not done yet:\n%s", tasks.get(taskIndex)));
+        Task task = tasks.get(taskIndex);
+        task.setDone(false);
+        ui.printUnmarkedTask(task);
     }
 
     /**
@@ -125,57 +128,6 @@ public class Waddles {
     private void handleDelete(Parser parser) throws WaddlesException {
         int taskIndex = parser.readIntegerArgument("task index", "");
         Task task = tasks.remove(taskIndex);
-        printMessage(String.format("""
-                        Noted. I've removed this task:
-                          %s
-                        Now you have %d tasks in the list."""
-                , task, tasks.size()));
-    }
-
-    private void printGreeting() {
-        String greeting = String.format("Hello! I'm %s.\n" + "What can I do for you?", NAME);
-        printMessage(greeting);
-    }
-
-    private void printFarewell() {
-        String farewell = "Bye. Hope to see you again soon!";
-        printMessage(farewell);
-    }
-
-    private void printList() {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 1; i <= tasks.size(); i++) {
-            builder.append(i).append(". ").append(tasks.getUnchecked(i)).append("\n");
-        }
-        printMessage(builder.toString());
-    }
-
-    private void printAddedTask(Task task) {
-        printMessage(String.format("""
-                Got it. I've added this task:
-                  %s
-                Now you have %d tasks in the list.""", task, tasks.size()));
-    }
-
-    /**
-     * Formats the message nicely and prints it to stdout.
-     * Prefer this method for printing to keep output consistent.
-     */
-    private void printMessage(String message) {
-        String leftPadding = " ".repeat(4);
-        String horizontalLine = "-".repeat(80);
-        System.out.println(leftPadding + horizontalLine);
-        for (String line : message.split("\n")) {
-            System.out.println(leftPadding + line);
-        }
-        System.out.println(leftPadding + horizontalLine);
-    }
-
-    /**
-     * Formats the error nicely and prints it to stdout.
-     * Prefer this method for printing to keep output consistent.
-     */
-    private void printError(WaddlesException error) {
-        printMessage(String.format("ERROR:\n%s", error.getMessage()));
+        ui.printDeletedTask(tasks, task);
     }
 }
