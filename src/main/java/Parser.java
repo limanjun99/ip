@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
 /**
  * Helps to parse the user input into a command.
  * The expected format looks like this:
@@ -56,6 +59,24 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new WaddlesException.InvalidArgument(argument, String.format("expected integer, got %s",
                     rawArgument));
+        }
+    }
+
+    /**
+     * Reads a datetime argument until the given delimiter.
+     * The datetime argument should have the format "yyyy-MM-dd HH:mm".
+     *
+     * @param argument  Describes the current argument being read.
+     * @param delimiter Delimiter to read until (empty if reading until the end).
+     */
+    public LocalDateTime readDateTimeArgument(String argument, String delimiter) throws WaddlesException {
+        String rawArgument = readArgument(argument, delimiter);
+        try {
+            return LocalDateTime.parse(rawArgument, Task.inputDateTimeFormatter);
+        } catch (DateTimeParseException e) {
+            throw new WaddlesException.InvalidArgument(argument,
+                    String.format("expected a date+time in format %s, " + "got %s", Task.inputDateTimeFormat,
+                            rawArgument));
         }
     }
 

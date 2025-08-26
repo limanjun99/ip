@@ -1,8 +1,24 @@
+import java.time.LocalDateTime;
+
 public class Event extends Task {
-    public Event(String description, boolean isDone, String start, String end) {
+    public Event(String description, boolean isDone, LocalDateTime start, LocalDateTime end) {
         super(description, isDone);
         this.start = start;
         this.end = end;
+    }
+
+    /**
+     * Returns a formatted string of this event's start time.
+     */
+    public String getStartString() {
+        return this.start.format(Task.outputDateTimeFormatter);
+    }
+
+    /**
+     * Returns a formatted string of this event's end time.
+     */
+    public String getEndString() {
+        return this.end.format(Task.outputDateTimeFormatter);
     }
 
     /**
@@ -14,8 +30,8 @@ public class Event extends Task {
         boolean isDone = fields[1].equals("1");
         String description = fields[2];
         String[] timing = fields[3].split("-");
-        String start = timing[0];
-        String end = timing[1];
+        LocalDateTime start = LocalDateTime.parse(timing[0], Task.outputDateTimeFormatter);
+        LocalDateTime end = LocalDateTime.parse(timing[1], Task.outputDateTimeFormatter);
         return new Event(description, isDone, start, end);
     }
 
@@ -33,14 +49,14 @@ public class Event extends Task {
      */
     @Override
     public String toSerializedString() {
-        return String.format("E | %s | %s-%s", super.toSerializedString(), start, end);
+        return String.format("E | %s | %s-%s", super.toSerializedString(), getStartString(), getEndString());
     }
 
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), start, end);
+        return String.format("[E]%s (from: %s to: %s)", super.toString(), getStartString(), getEndString());
     }
 
-    private final String start;
-    private final String end;
+    private final LocalDateTime start;
+    private final LocalDateTime end;
 }
