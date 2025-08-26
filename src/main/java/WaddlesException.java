@@ -20,4 +20,10 @@ public class WaddlesException extends Exception {
             super(String.format("Argument \"%s\" is invalid (%s)", argument, reason));
         }
     }
+
+    public static class FileError extends WaddlesException {
+        public FileError(String message) {
+            super(message);
+        }
+    }
 }
