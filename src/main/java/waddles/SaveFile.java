@@ -23,7 +23,7 @@ public class SaveFile {
         createSaveDirectory();
         try {
             FileWriter writer = new FileWriter(SAVE_PATH);
-            for (int i = 1; i <= tasks.size(); i++) {
+            for (int i = 1; i <= tasks.getSize(); i++) {
                 writer.write(tasks.getUnchecked(i).toSerializedString());
                 writer.write("\n");
             }

@@ -31,7 +31,7 @@ public class Tasks {
     /**
      * Returns the number of tasks.
      */
-    public int size() {
+    public int getSize() {
         return tasks.size();
     }
 
@@ -63,7 +63,7 @@ public class Tasks {
     private void checkIndex(int index) throws WaddlesException.InvalidArgument {
         if (index <= 0 || index > tasks.size()) {
             throw new WaddlesException.InvalidArgument("task index",
-                    String.format("%d is out of" + " range of [1, " + "%d]", index, size()));
+                    String.format("%d is out of" + " range of [1, " + "%d]", index, getSize()));
         }
     }
 }
