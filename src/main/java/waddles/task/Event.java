@@ -6,24 +6,13 @@ import java.time.LocalDateTime;
  * Events have a description and completion status, as well as a start and ending datetime.
  */
 public class Event extends Task {
+    private final LocalDateTime start;
+    private final LocalDateTime end;
+
     public Event(String description, boolean isDone, LocalDateTime start, LocalDateTime end) {
         super(description, isDone);
         this.start = start;
         this.end = end;
-    }
-
-    /**
-     * Returns a formatted string of this event's start time.
-     */
-    public String getStartString() {
-        return this.start.format(Task.outputDateTimeFormatter);
-    }
-
-    /**
-     * Returns a formatted string of this event's end time.
-     */
-    public String getEndString() {
-        return this.end.format(Task.outputDateTimeFormatter);
     }
 
     /**
@@ -35,8 +24,8 @@ public class Event extends Task {
         boolean isDone = fields[1].equals("1");
         String description = fields[2];
         String[] timing = fields[3].split("-");
-        LocalDateTime start = LocalDateTime.parse(timing[0], Task.outputDateTimeFormatter);
-        LocalDateTime end = LocalDateTime.parse(timing[1], Task.outputDateTimeFormatter);
+        LocalDateTime start = LocalDateTime.parse(timing[0], Task.OUTPUT_DATETIME_FORMATTER);
+        LocalDateTime end = LocalDateTime.parse(timing[1], Task.OUTPUT_DATETIME_FORMATTER);
         return new Event(description, isDone, start, end);
     }
 
@@ -46,6 +35,20 @@ public class Event extends Task {
      */
     public static boolean isSerialization(String serialized) {
         return serialized.startsWith("E |");
+    }
+
+    /**
+     * Returns a formatted string of this event's start time.
+     */
+    public String getStartString() {
+        return this.start.format(Task.OUTPUT_DATETIME_FORMATTER);
+    }
+
+    /**
+     * Returns a formatted string of this event's end time.
+     */
+    public String getEndString() {
+        return this.end.format(Task.OUTPUT_DATETIME_FORMATTER);
     }
 
     /**
@@ -61,7 +64,4 @@ public class Event extends Task {
     public String toString() {
         return String.format("[E]%s (from: %s to: %s)", super.toString(), getStartString(), getEndString());
     }
-
-    private final LocalDateTime start;
-    private final LocalDateTime end;
 }

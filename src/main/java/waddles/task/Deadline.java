@@ -6,16 +6,11 @@ import java.time.LocalDateTime;
  * Deadlines are like Todos, with the addition that they must be completed by a certain time.
  */
 public class Deadline extends Task {
+    private final LocalDateTime by;
+
     public Deadline(String description, boolean isDone, LocalDateTime by) {
         super(description, isDone);
         this.by = by;
-    }
-
-    /**
-     * Returns a formatted string of when this deadline is due by.
-     */
-    public String getByString() {
-        return this.by.format(Task.outputDateTimeFormatter);
     }
 
     /**
@@ -26,7 +21,7 @@ public class Deadline extends Task {
         String[] fields = Task.splitSerialized(serialized);
         boolean isDone = fields[1].equals("1");
         String description = fields[2];
-        LocalDateTime by = LocalDateTime.parse(fields[3], Task.outputDateTimeFormatter);
+        LocalDateTime by = LocalDateTime.parse(fields[3], Task.OUTPUT_DATETIME_FORMATTER);
         return new Deadline(description, isDone, by);
     }
 
@@ -36,6 +31,13 @@ public class Deadline extends Task {
      */
     public static boolean isSerialization(String serialized) {
         return serialized.startsWith("D |");
+    }
+
+    /**
+     * Returns a formatted string of when this deadline is due by.
+     */
+    public String getByString() {
+        return this.by.format(Task.OUTPUT_DATETIME_FORMATTER);
     }
 
     /**
@@ -51,6 +53,4 @@ public class Deadline extends Task {
     public String toString() {
         return String.format("[D]%s (by: %s)", super.toString(), getByString());
     }
-
-    private final LocalDateTime by;
 }

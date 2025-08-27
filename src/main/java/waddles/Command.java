@@ -6,16 +6,14 @@ package waddles;
  * with the given command string stored in the {@code name} field.
  */
 public enum Command {
-    BYE("bye"),
-    LIST("list"),
-    MARK("mark"),
-    UNMARK("unmark"),
-    TODO("todo"),
-    DEADLINE("deadline"),
-    EVENT("event"),
-    DELETE("delete"),
-    INVALID("invalid"),
-    ;
+    BYE("bye"), LIST("list"), MARK("mark"), UNMARK("unmark"), TODO("todo"), DEADLINE("deadline"), EVENT("event"),
+    DELETE("delete"), INVALID("invalid");
+
+    private String name;
+
+    Command(String name) {
+        this.name = name;
+    }
 
     /**
      * Parses a string and returns the command it corresponds to.
@@ -36,10 +34,4 @@ public enum Command {
     public String toString() {
         return this.name;
     }
-
-    Command(String name) {
-        this.name = name;
-    }
-
-    private String name;
 }

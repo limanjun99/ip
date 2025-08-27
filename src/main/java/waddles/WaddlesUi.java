@@ -30,7 +30,7 @@ public class WaddlesUi {
      */
     public void printTasks(Tasks tasks) {
         StringBuilder builder = new StringBuilder();
-        for (int i = 1; i <= tasks.size(); i++) {
+        for (int i = 1; i <= tasks.getSize(); i++) {
             builder.append(String.format("%d. %s\n", i, tasks.getUnchecked(i)));
         }
         printMessage(builder.toString());
@@ -46,7 +46,7 @@ public class WaddlesUi {
         printMessage(String.format("""
                 Got it. I've added this task:
                   %s
-                Now you have %d tasks in the list.""", newTask, tasks.size()));
+                Now you have %d tasks in the list.""", newTask, tasks.getSize()));
     }
 
     /**
@@ -59,7 +59,7 @@ public class WaddlesUi {
         printMessage(String.format("""
                 Noted. I've removed this task:
                   %s
-                Now you have %d tasks in the list.""", oldTask, tasks.size()));
+                Now you have %d tasks in the list.""", oldTask, tasks.getSize()));
     }
 
     /**

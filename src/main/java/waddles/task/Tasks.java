@@ -1,14 +1,16 @@
 package waddles.task;
 
-import waddles.WaddlesException;
-
 import java.util.ArrayList;
+
+import waddles.WaddlesException;
 
 /**
  * Represents a lists of tasks.
  * Note that this data structure is 1-indexed.
  */
 public class Tasks {
+    private final ArrayList<Task> tasks;
+
     public Tasks() {
         tasks = new ArrayList<>();
     }
@@ -32,7 +34,7 @@ public class Tasks {
     /**
      * Returns the number of tasks.
      */
-    public int size() {
+    public int getSize() {
         return tasks.size();
     }
 
@@ -53,8 +55,6 @@ public class Tasks {
         return tasks.remove(index - 1);
     }
 
-    private final ArrayList<Task> tasks;
-
     /**
      * Checks if the given index is valid,
      * i.e. within the range [1, size()].
@@ -64,7 +64,7 @@ public class Tasks {
     private void checkIndex(int index) throws WaddlesException.InvalidArgument {
         if (index <= 0 || index > tasks.size()) {
             throw new WaddlesException.InvalidArgument("task index",
-                    String.format("%d is out of" + " range of [1, " + "%d]", index, size()));
+                    String.format("%d is out of" + " range of [1, " + "%d]", index, getSize()));
         }
     }
 }

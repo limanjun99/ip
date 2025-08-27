@@ -4,20 +4,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public abstract class Task {
+    public static final String INPUT_DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final DateTimeFormatter INPUT_DATETIME_FORMATTER = DateTimeFormatter.ofPattern(INPUT_DATETIME_FORMAT);
+    public static final String OUTPUT_DATETIME_FORMAT = "MMM dd yyyy HH:mm";
+    public static final DateTimeFormatter OUTPUT_DATETIME_FORMATTER =
+            DateTimeFormatter.ofPattern(OUTPUT_DATETIME_FORMAT);
+    private final String description;
+    private boolean isDone;
+
     public Task(String description, boolean isDone) {
         this.description = description;
-        this.isDone = isDone;
-    }
-
-    public static final String inputDateTimeFormat = "yyyy-MM-dd HH:mm";
-    public static final DateTimeFormatter inputDateTimeFormatter = DateTimeFormatter.ofPattern(inputDateTimeFormat);
-    public static final String outputDateTimeFormat = "MMM dd yyyy HH:mm";
-    public static final DateTimeFormatter outputDateTimeFormatter = DateTimeFormatter.ofPattern(outputDateTimeFormat);
-
-    /**
-     * Marks this task as done / undone.
-     */
-    public void setDone(boolean isDone) {
         this.isDone = isDone;
     }
 
@@ -27,6 +23,13 @@ public abstract class Task {
      */
     public static String[] splitSerialized(String serialized) {
         return Arrays.stream(serialized.split("\\|")).map(String::strip).toArray(String[]::new);
+    }
+
+    /**
+     * Marks this task as done / undone.
+     */
+    public void setDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
     /**
@@ -42,7 +45,4 @@ public abstract class Task {
         char doneMarker = isDone ? 'X' : ' ';
         return String.format("[%c] %s", doneMarker, description);
     }
-
-    private final String description;
-    private boolean isDone;
 }
