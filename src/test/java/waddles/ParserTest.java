@@ -61,8 +61,9 @@ public class ParserTest {
             parser.readDateTimeArgument("date", "");
             fail();
         } catch (WaddlesException e) {
-            String expectedError = "Argument \"date\" is invalid (expected a date+time in format yyyy-MM-dd HH:mm, " +
-                    "got 2025-30-30 23:30)";
+            String expectedError =
+                    "Argument \"date\" is invalid (expected a date+time in format yyyy-MM-dd HH:mm, " + "got " +
+                            "2025-30-30 23:30)";
             assertEquals(expectedError, e.getMessage());
         }
     }

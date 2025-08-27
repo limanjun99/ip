@@ -1,16 +1,8 @@
 package waddles;
 
 public enum Command {
-    BYE("bye"),
-    LIST("list"),
-    MARK("mark"),
-    UNMARK("unmark"),
-    TODO("todo"),
-    DEADLINE("deadline"),
-    EVENT("event"),
-    DELETE("delete"),
-    INVALID("invalid"),
-    ;
+    BYE("bye"), LIST("list"), MARK("mark"), UNMARK("unmark"), TODO("todo"), DEADLINE("deadline"), EVENT("event"),
+    DELETE("delete"), INVALID("invalid");
 
     public static Command fromString(String s) {
         for (Command command : Command.values()) {
