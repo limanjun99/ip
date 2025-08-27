@@ -9,10 +9,11 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
-    public static final String inputDateTimeFormat = "yyyy-MM-dd HH:mm";
-    public static final DateTimeFormatter inputDateTimeFormatter = DateTimeFormatter.ofPattern(inputDateTimeFormat);
-    public static final String outputDateTimeFormat = "MMM dd yyyy HH:mm";
-    public static final DateTimeFormatter outputDateTimeFormatter = DateTimeFormatter.ofPattern(outputDateTimeFormat);
+    public static final String INPUT_DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final DateTimeFormatter INPUT_DATETIME_FORMATTER = DateTimeFormatter.ofPattern(INPUT_DATETIME_FORMAT);
+    public static final String OUTPUT_DATETIME_FORMAT = "MMM dd yyyy HH:mm";
+    public static final DateTimeFormatter OUTPUT_DATETIME_FORMATTER =
+            DateTimeFormatter.ofPattern(OUTPUT_DATETIME_FORMAT);
 
     /**
      * Marks this task as done / undone.

@@ -13,14 +13,14 @@ public class Event extends Task {
      * Returns a formatted string of this event's start time.
      */
     public String getStartString() {
-        return this.start.format(Task.outputDateTimeFormatter);
+        return this.start.format(Task.OUTPUT_DATETIME_FORMATTER);
     }
 
     /**
      * Returns a formatted string of this event's end time.
      */
     public String getEndString() {
-        return this.end.format(Task.outputDateTimeFormatter);
+        return this.end.format(Task.OUTPUT_DATETIME_FORMATTER);
     }
 
     /**
@@ -32,8 +32,8 @@ public class Event extends Task {
         boolean isDone = fields[1].equals("1");
         String description = fields[2];
         String[] timing = fields[3].split("-");
-        LocalDateTime start = LocalDateTime.parse(timing[0], Task.outputDateTimeFormatter);
-        LocalDateTime end = LocalDateTime.parse(timing[1], Task.outputDateTimeFormatter);
+        LocalDateTime start = LocalDateTime.parse(timing[0], Task.OUTPUT_DATETIME_FORMATTER);
+        LocalDateTime end = LocalDateTime.parse(timing[1], Task.OUTPUT_DATETIME_FORMATTER);
         return new Event(description, isDone, start, end);
     }
 

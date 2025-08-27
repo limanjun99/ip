@@ -76,10 +76,10 @@ public class Parser {
     public LocalDateTime readDateTimeArgument(String argument, String delimiter) throws WaddlesException {
         String rawArgument = readArgument(argument, delimiter);
         try {
-            return LocalDateTime.parse(rawArgument, Task.inputDateTimeFormatter);
+            return LocalDateTime.parse(rawArgument, Task.INPUT_DATETIME_FORMATTER);
         } catch (DateTimeParseException e) {
             throw new WaddlesException.InvalidArgument(argument,
-                    String.format("expected a date+time in format %s, " + "got %s", Task.inputDateTimeFormat,
+                    String.format("expected a date+time in format %s, " + "got %s", Task.INPUT_DATETIME_FORMAT,
                             rawArgument));
         }
     }
