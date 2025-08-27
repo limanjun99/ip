@@ -66,6 +66,7 @@ public class Waddles {
         case DEADLINE -> handleAddDeadline(parser);
         case EVENT -> handleAddEvent(parser);
         case DELETE -> handleDelete(parser);
+        case FIND -> handleFind(parser);
         case INVALID -> throw new WaddlesException.InvalidCommand(input);
         }
         return false;
@@ -137,5 +138,15 @@ public class Waddles {
         int taskIndex = parser.readIntegerArgument("task index", "");
         Task task = tasks.remove(taskIndex);
         ui.printDeletedTask(tasks, task);
+    }
+
+    /**
+     * Finds tasks containing a keyword.
+     * The user input should have the format {@code find <keyword>}.
+     */
+    private void handleFind(Parser parser) throws WaddlesException {
+        String keyword = parser.readArgument("keyword", "");
+        Tasks filteredTasks = tasks.find(keyword);
+        ui.printTasks(filteredTasks);
     }
 }

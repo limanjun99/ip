@@ -25,6 +25,10 @@ public abstract class Task {
         return Arrays.stream(serialized.split("\\|")).map(String::strip).toArray(String[]::new);
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     /**
      * Marks this task as done / undone.
      */

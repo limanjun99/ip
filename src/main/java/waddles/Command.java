@@ -7,7 +7,7 @@ package waddles;
  */
 public enum Command {
     BYE("bye"), LIST("list"), MARK("mark"), UNMARK("unmark"), TODO("todo"), DEADLINE("deadline"), EVENT("event"),
-    DELETE("delete"), INVALID("invalid");
+    DELETE("delete"), FIND("find"), INVALID("invalid");
 
     private String name;
 
