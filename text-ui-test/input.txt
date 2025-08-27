@@ -17,4 +17,11 @@ delete 1
 list
 delete 1
 delete 1
+todo return book 1
+todo testing
+todo return book 2
+find book
+delete 1
+delete 1
+delete 1
 bye

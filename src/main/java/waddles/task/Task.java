@@ -14,6 +14,10 @@ public abstract class Task {
     public static final String outputDateTimeFormat = "MMM dd yyyy HH:mm";
     public static final DateTimeFormatter outputDateTimeFormatter = DateTimeFormatter.ofPattern(outputDateTimeFormat);
 
+    public String getDescription() {
+        return this.description;
+    }
+
     /**
      * Marks this task as done / undone.
      */

@@ -29,6 +29,19 @@ public class Tasks {
     }
 
     /**
+     * Returns all tasks containing the given keyword in their description.
+     */
+    public Tasks find(String keyword) {
+        Tasks filteredTasks = new Tasks();
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                filteredTasks.add(task);
+            }
+        }
+        return filteredTasks;
+    }
+
+    /**
      * Returns the number of tasks.
      */
     public int size() {
