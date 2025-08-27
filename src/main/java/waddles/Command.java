@@ -1,5 +1,10 @@
 package waddles;
 
+/**
+ * Enum of all possible commands handled by Waddles.
+ * Note that {@code Command.INVALID} represents an unknown command,
+ * with the given command string stored in the {@code name} field.
+ */
 public enum Command {
     BYE("bye"),
     LIST("list"),
@@ -12,6 +17,10 @@ public enum Command {
     INVALID("invalid"),
     ;
 
+    /**
+     * Parses a string and returns the command it corresponds to.
+     * If the string is not a valid command, then {@code Command.INVALID} is returned.
+     */
     public static Command fromString(String s) {
         for (Command command : Command.values()) {
             if (!command.equals(INVALID) && command.toString().equals(s)) {

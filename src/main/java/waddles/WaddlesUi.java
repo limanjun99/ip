@@ -3,6 +3,9 @@ package waddles;
 import waddles.task.Task;
 import waddles.task.Tasks;
 
+/**
+ * Handles printing information to the command line.
+ */
 public class WaddlesUi {
     private static final String NAME = "Waddles";
 

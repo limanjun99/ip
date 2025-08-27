@@ -2,6 +2,9 @@ package waddles.task;
 
 import java.time.LocalDateTime;
 
+/**
+ * Deadlines are like Todos, with the addition that they must be completed by a certain time.
+ */
 public class Deadline extends Task {
     public Deadline(String description, boolean isDone, LocalDateTime by) {
         super(description, isDone);

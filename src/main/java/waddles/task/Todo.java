@@ -1,5 +1,8 @@
 package waddles.task;
 
+/**
+ * Todos are the most generic task - they only have a description and completion status.
+ */
 public class Todo extends Task {
     public Todo(String description, boolean isDone) {
         super(description, isDone);

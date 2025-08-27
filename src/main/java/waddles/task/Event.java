@@ -2,6 +2,9 @@ package waddles.task;
 
 import java.time.LocalDateTime;
 
+/**
+ * Events have a description and completion status, as well as a start and ending datetime.
+ */
 public class Event extends Task {
     public Event(String description, boolean isDone, LocalDateTime start, LocalDateTime end) {
         super(description, isDone);
