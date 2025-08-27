@@ -1,7 +1,5 @@
 package waddles;
 
-import waddles.task.*;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,6 +7,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+
+import waddles.task.Deadline;
+import waddles.task.Event;
+import waddles.task.Task;
+import waddles.task.Tasks;
+import waddles.task.Todo;
 
 /**
  * This class handles saving/loading tasks to/from disk, so that user sessions are persisted across runs.

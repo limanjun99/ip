@@ -3,24 +3,13 @@ package waddles.task;
 import java.time.LocalDateTime;
 
 public class Event extends Task {
+    private final LocalDateTime start;
+    private final LocalDateTime end;
+
     public Event(String description, boolean isDone, LocalDateTime start, LocalDateTime end) {
         super(description, isDone);
         this.start = start;
         this.end = end;
-    }
-
-    /**
-     * Returns a formatted string of this event's start time.
-     */
-    public String getStartString() {
-        return this.start.format(Task.OUTPUT_DATETIME_FORMATTER);
-    }
-
-    /**
-     * Returns a formatted string of this event's end time.
-     */
-    public String getEndString() {
-        return this.end.format(Task.OUTPUT_DATETIME_FORMATTER);
     }
 
     /**
@@ -46,6 +35,20 @@ public class Event extends Task {
     }
 
     /**
+     * Returns a formatted string of this event's start time.
+     */
+    public String getStartString() {
+        return this.start.format(Task.OUTPUT_DATETIME_FORMATTER);
+    }
+
+    /**
+     * Returns a formatted string of this event's end time.
+     */
+    public String getEndString() {
+        return this.end.format(Task.OUTPUT_DATETIME_FORMATTER);
+    }
+
+    /**
      * Returns a serialization of this event.
      * Serialization format: <code>E | isDone | description | start-end</code>.
      */
@@ -58,7 +61,4 @@ public class Event extends Task {
     public String toString() {
         return String.format("[E]%s (from: %s to: %s)", super.toString(), getStartString(), getEndString());
     }
-
-    private final LocalDateTime start;
-    private final LocalDateTime end;
 }

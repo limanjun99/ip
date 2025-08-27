@@ -1,11 +1,11 @@
 package waddles.task;
 
-import waddles.WaddlesException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import waddles.WaddlesException;
 
 public class TasksTest {
     @Test

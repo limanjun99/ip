@@ -1,9 +1,9 @@
 package waddles;
 
-import waddles.task.Task;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+
+import waddles.task.Task;
 
 /**
  * Helps to parse the user input into a command.
@@ -15,6 +15,10 @@ import java.time.format.DateTimeParseException;
  * {@code event project meeting /from 1pm /to 3pm}
  */
 public class Parser {
+    private final String input;
+    private final Command command;
+    private int consumed;
+
     public Parser(String input) {
         this.input = input;
         this.command = input.isEmpty() ? Command.INVALID : Command.fromString(input.split(" ", 2)[0]);
@@ -83,8 +87,4 @@ public class Parser {
                             rawArgument));
         }
     }
-
-    private final String input;
-    private final Command command;
-    private int consumed;
 }

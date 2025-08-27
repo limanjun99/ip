@@ -1,13 +1,15 @@
 package waddles.task;
 
-import waddles.WaddlesException;
-
 import java.util.ArrayList;
+
+import waddles.WaddlesException;
 
 /**
  * Represents a lists of tasks.
  */
 public class Tasks {
+    private final ArrayList<Task> tasks;
+
     public Tasks() {
         tasks = new ArrayList<>();
     }
@@ -51,8 +53,6 @@ public class Tasks {
         checkIndex(index);
         return tasks.remove(index - 1);
     }
-
-    private final ArrayList<Task> tasks;
 
     /**
      * Checks if the given index is valid,

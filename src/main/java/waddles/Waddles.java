@@ -1,20 +1,28 @@
 package waddles;
 
-import waddles.task.*;
-
-import java.util.Scanner;
 import java.time.LocalDateTime;
+import java.util.Scanner;
+
+import waddles.task.Deadline;
+import waddles.task.Event;
+import waddles.task.Task;
+import waddles.task.Tasks;
+import waddles.task.Todo;
 
 public class Waddles {
-    public static void main(String[] args) {
-        Waddles waddles = new Waddles();
-        waddles.run();
-    }
+    private final Tasks tasks;
+    private final SaveFile saveFile;
+    private final WaddlesUi ui;
 
     public Waddles() {
         saveFile = new SaveFile();
         tasks = saveFile.load();
         ui = new WaddlesUi();
+    }
+
+    public static void main(String[] args) {
+        Waddles waddles = new Waddles();
+        waddles.run();
     }
 
     /**
@@ -38,10 +46,6 @@ public class Waddles {
 
         ui.printFarewell();
     }
-
-    private final Tasks tasks;
-    private final SaveFile saveFile;
-    private final WaddlesUi ui;
 
     /**
      * Handles a single line of input from the user.

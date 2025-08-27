@@ -3,16 +3,11 @@ package waddles.task;
 import java.time.LocalDateTime;
 
 public class Deadline extends Task {
+    private final LocalDateTime by;
+
     public Deadline(String description, boolean isDone, LocalDateTime by) {
         super(description, isDone);
         this.by = by;
-    }
-
-    /**
-     * Returns a formatted string of when this deadline is due by.
-     */
-    public String getByString() {
-        return this.by.format(Task.OUTPUT_DATETIME_FORMATTER);
     }
 
     /**
@@ -36,6 +31,13 @@ public class Deadline extends Task {
     }
 
     /**
+     * Returns a formatted string of when this deadline is due by.
+     */
+    public String getByString() {
+        return this.by.format(Task.OUTPUT_DATETIME_FORMATTER);
+    }
+
+    /**
      * Returns a serialization of this deadline.
      * Serialization format: <code>D | isDone | description | by</code>.
      */
@@ -48,6 +50,4 @@ public class Deadline extends Task {
     public String toString() {
         return String.format("[D]%s (by: %s)", super.toString(), getByString());
     }
-
-    private final LocalDateTime by;
 }
