@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 public class Deadline extends Task {
     private final LocalDateTime by;
 
+    /**
+     * Constructs a new Deadline object.
+     */
     public Deadline(String description, boolean isDone, LocalDateTime by) {
         super(description, isDone);
         this.by = by;

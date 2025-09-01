@@ -9,6 +9,9 @@ public class Event extends Task {
     private final LocalDateTime start;
     private final LocalDateTime end;
 
+    /**
+     * Constructs a new Event object.
+     */
     public Event(String description, boolean isDone, LocalDateTime start, LocalDateTime end) {
         super(description, isDone);
         this.start = start;
