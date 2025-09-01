@@ -19,10 +19,15 @@ public class Parser {
     private final Command command;
     private int consumed;
 
+    /**
+     * Constructs a new parser.
+     *
+     * @param input User input to be parsed.
+     */
     public Parser(String input) {
         this.input = input;
         this.command = input.isEmpty() ? Command.INVALID : Command.fromString(input.split(" ", 2)[0]);
-        this.consumed = this.command.toString().length() + 1;  // +1 to consume the space after the command.
+        this.consumed = this.command.toString().length() + 1; // +1 to consume the space after the command.
     }
 
     public Command getCommand() {

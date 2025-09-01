@@ -9,11 +9,17 @@ import waddles.task.Task;
 import waddles.task.Tasks;
 import waddles.task.Todo;
 
+/**
+ * Waddles is a chatbot that manages user tasks.
+ */
 public class Waddles {
     private final Tasks tasks;
     private final SaveFile saveFile;
     private final WaddlesUi ui;
 
+    /**
+     * Constructs a new Waddles object.
+     */
     public Waddles() {
         saveFile = new SaveFile();
         tasks = saveFile.load();
@@ -67,7 +73,7 @@ public class Waddles {
         case EVENT -> handleAddEvent(parser);
         case DELETE -> handleDelete(parser);
         case FIND -> handleFind(parser);
-        case INVALID -> throw new WaddlesException.InvalidCommand(input);
+        default -> throw new WaddlesException.InvalidCommand(input);
         }
         return false;
     }

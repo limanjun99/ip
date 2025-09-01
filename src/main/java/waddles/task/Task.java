@@ -3,6 +3,9 @@ package waddles.task;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+/**
+ * Base Task class for all types of tasks.
+ */
 public abstract class Task {
     public static final String INPUT_DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
     public static final DateTimeFormatter INPUT_DATETIME_FORMATTER = DateTimeFormatter.ofPattern(INPUT_DATETIME_FORMAT);
@@ -12,6 +15,9 @@ public abstract class Task {
     private final String description;
     private boolean isDone;
 
+    /**
+     * Constructs a new Task object.
+     */
     public Task(String description, boolean isDone) {
         this.description = description;
         this.isDone = isDone;
