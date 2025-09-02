@@ -25,3 +25,10 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
    ```
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+
+## Credits
+
+Images:
+
+- `src/main/resources/images/UserProfile.png`: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a>
+- `src/main/resources/images/WaddlesProfile.png`: [Source](https://www.crunchyroll.com/news/latest/2023/5/4/anyas-penguin-from-spy-x-family-gets-deluxe-plush-treatment)
