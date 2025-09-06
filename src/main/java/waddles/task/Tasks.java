@@ -1,6 +1,9 @@
 package waddles.task;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import waddles.WaddlesException;
 
@@ -11,8 +14,18 @@ import waddles.WaddlesException;
 public class Tasks {
     private final ArrayList<Task> tasks;
 
+    /**
+     * Constructs a new tasks list.
+     */
     public Tasks() {
         tasks = new ArrayList<>();
+    }
+
+    /**
+     * Constructs a tasks list from any existing list of tasks.
+     */
+    public Tasks(List<Task> tasks) {
+        this.tasks = new ArrayList<>(tasks);
     }
 
     /**
@@ -36,13 +49,9 @@ public class Tasks {
      * Returns all tasks containing the given keyword in their description.
      */
     public Tasks find(String keyword) {
-        Tasks filteredTasks = new Tasks();
-        for (Task task : tasks) {
-            if (task.getDescription().contains(keyword)) {
-                filteredTasks.add(task);
-            }
-        }
-        return filteredTasks;
+        List<Task> filteredTasks =
+                tasks.stream().filter(task -> task.getDescription().contains(keyword)).collect(toList());
+        return new Tasks(filteredTasks);
     }
 
     /**
