@@ -22,6 +22,7 @@ public class Deadline extends Task {
      */
     public static Deadline fromSerializedString(String serialized) {
         String[] fields = Task.splitSerialized(serialized);
+        assert fields.length == 4 : "Failed to deserialize deadline - invalid format";
         boolean isDone = fields[1].equals("1");
         String description = fields[2];
         LocalDateTime by = LocalDateTime.parse(fields[3], Task.OUTPUT_DATETIME_FORMATTER);
