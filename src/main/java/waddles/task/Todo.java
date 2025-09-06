@@ -14,6 +14,7 @@ public class Todo extends Task {
      */
     public static Todo fromSerializedString(String serialized) {
         String[] fields = Task.splitSerialized(serialized);
+        assert fields.length == 3 : "Failed to deserialize todo - invalid format";
         boolean isDone = fields[1].equals("1");
         String description = fields[2];
         return new Todo(description, isDone);
