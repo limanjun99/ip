@@ -41,6 +41,7 @@ public class Tasks {
      * Does not perform range checks (i.e. you get runtime error if index is out of bounds).
      */
     public Task getUnchecked(int index) {
+        assert index >= 1 && index <= tasks.size() : "Tasks index out of bounds";
         return tasks.get(index - 1);
     }
 
