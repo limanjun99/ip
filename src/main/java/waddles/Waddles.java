@@ -34,7 +34,8 @@ public class Waddles {
             saveFile.save(tasks);
             return result;
         } catch (WaddlesException e) {
-            return WaddlesResult.makeError(ui.makeErrorMessage(e));
+            String errorMessage = ui.makeErrorMessage(e);
+            return WaddlesResult.makeError(errorMessage);
         }
     }
 
@@ -73,14 +74,16 @@ public class Waddles {
      * Terminates Waddles.
      */
     private WaddlesResult handleBye() {
-        return WaddlesResult.makeEnd(ui.makeFarewellMessage());
+        String message = ui.makeFarewellMessage();
+        return WaddlesResult.makeEnd(message);
     }
 
     /**
      * Lists all current tasks.
      */
     private WaddlesResult handleList() {
-        return WaddlesResult.makeSuccess(ui.makeTasksMessage(tasks));
+        String listMessage = ui.makeTasksMessage(tasks);
+        return WaddlesResult.makeSuccess(listMessage);
     }
 
     /**
@@ -91,7 +94,8 @@ public class Waddles {
         String description = parser.readArgument("task description", "");
         Todo todo = new Todo(description, false);
         tasks.add(todo);
-        return WaddlesResult.makeSuccess(ui.makeAddedTaskMessage(tasks, todo));
+        String verificationMessage = ui.makeAddedTaskMessage(tasks, todo);
+        return WaddlesResult.makeSuccess(verificationMessage);
     }
 
     /**
@@ -103,7 +107,8 @@ public class Waddles {
         LocalDateTime by = parser.readDateTimeArgument("deadline (/by)", "");
         Deadline deadline = new Deadline(description, false, by);
         tasks.add(deadline);
-        return WaddlesResult.makeSuccess(ui.makeAddedTaskMessage(tasks, deadline));
+        String verificationMessage = ui.makeAddedTaskMessage(tasks, deadline);
+        return WaddlesResult.makeSuccess(verificationMessage);
     }
 
     /**
@@ -116,7 +121,8 @@ public class Waddles {
         LocalDateTime to = parser.readDateTimeArgument("to (/to)", "");
         Event event = new Event(description, false, from, to);
         tasks.add(event);
-        return WaddlesResult.makeSuccess(ui.makeAddedTaskMessage(tasks, event));
+        String verificationMessage = ui.makeAddedTaskMessage(tasks, event);
+        return WaddlesResult.makeSuccess(verificationMessage);
     }
 
     /**
@@ -127,7 +133,8 @@ public class Waddles {
         int taskIndex = parser.readIntegerArgument("task index", "");
         Task task = tasks.get(taskIndex);
         task.setDone(true);
-        return WaddlesResult.makeSuccess(ui.makeMarkedTaskMessage(task));
+        String verificationMessage = ui.makeMarkedTaskMessage(task);
+        return WaddlesResult.makeSuccess(verificationMessage);
     }
 
     /**
@@ -138,7 +145,8 @@ public class Waddles {
         int taskIndex = parser.readIntegerArgument("task index", "");
         Task task = tasks.get(taskIndex);
         task.setDone(false);
-        return WaddlesResult.makeSuccess(ui.makeUnmarkedTaskMessage(task));
+        String verificationMessage = ui.makeUnmarkedTaskMessage(task);
+        return WaddlesResult.makeSuccess(verificationMessage);
     }
 
     /**
@@ -148,7 +156,8 @@ public class Waddles {
     private WaddlesResult handleDelete(Parser parser) throws WaddlesException {
         int taskIndex = parser.readIntegerArgument("task index", "");
         Task task = tasks.remove(taskIndex);
-        return WaddlesResult.makeSuccess(ui.makeDeletedTaskMessage(tasks, task));
+        String verificationMessage = ui.makeDeletedTaskMessage(tasks, task);
+        return WaddlesResult.makeSuccess(verificationMessage);
     }
 
     /**
@@ -158,6 +167,7 @@ public class Waddles {
     private WaddlesResult handleFind(Parser parser) throws WaddlesException {
         String keyword = parser.readArgument("keyword", "");
         Tasks filteredTasks = tasks.find(keyword);
-        return WaddlesResult.makeSuccess(ui.makeTasksMessage(filteredTasks));
+        String foundMessage = ui.makeTasksMessage(filteredTasks);
+        return WaddlesResult.makeSuccess(foundMessage);
     }
 }
