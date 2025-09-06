@@ -44,6 +44,7 @@ public class Parser {
         if (consumed >= this.input.length()) {
             throw new WaddlesException.MissingArgument(argument);
         }
+
         int argumentEnd = delimiter.isEmpty() ? input.length() : input.indexOf(delimiter, consumed);
         if (argumentEnd == -1) {
             // If delimiter is missing, just consume all remaining input.
@@ -51,11 +52,13 @@ public class Parser {
             // and we find that we consumed everything.
             argumentEnd = input.length();
         }
+
         String argumentValue = input.substring(consumed, argumentEnd);
         consumed = argumentEnd + delimiter.length();
         if (argumentValue.isEmpty()) {
             throw new WaddlesException.MissingArgument(argument);
         }
+
         return argumentValue;
     }
 
@@ -70,8 +73,8 @@ public class Parser {
         try {
             return Integer.parseInt(rawArgument);
         } catch (NumberFormatException e) {
-            throw new WaddlesException.InvalidArgument(argument, String.format("expected integer, got %s",
-                    rawArgument));
+            String errorMessage = String.format("expected integer, got %s", rawArgument);
+            throw new WaddlesException.InvalidArgument(argument, errorMessage);
         }
     }
 
@@ -87,9 +90,9 @@ public class Parser {
         try {
             return LocalDateTime.parse(rawArgument, Task.INPUT_DATETIME_FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new WaddlesException.InvalidArgument(argument,
-                    String.format("expected a date+time in format %s, " + "got %s", Task.INPUT_DATETIME_FORMAT,
-                            rawArgument));
+            String errorMessage = String.format("expected a date+time in format %s, got %s",
+                    Task.INPUT_DATETIME_FORMAT, rawArgument);
+            throw new WaddlesException.InvalidArgument(argument, errorMessage);
         }
     }
 }

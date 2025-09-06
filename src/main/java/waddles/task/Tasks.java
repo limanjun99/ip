@@ -76,8 +76,8 @@ public class Tasks {
      */
     private void checkIndex(int index) throws WaddlesException.InvalidArgument {
         if (index <= 0 || index > tasks.size()) {
-            throw new WaddlesException.InvalidArgument("task index",
-                    String.format("%d is out of" + " range of [1, " + "%d]", index, getSize()));
+            String errorMessage = String.format("%d is out of" + " range of [1, " + "%d]", index, getSize());
+            throw new WaddlesException.InvalidArgument("task index", errorMessage);
         }
     }
 }

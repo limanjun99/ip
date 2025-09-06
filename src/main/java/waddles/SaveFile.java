@@ -21,20 +21,15 @@ public class SaveFile {
     public static final String SAVE_PATH = "./data/waddles.txt";
 
     /**
-     * Saves the given tasks to a save file in SAVE_PATH.
+     * Creates a save file in SAVE_PATH and saves the given tasks.
      */
     public void save(Tasks tasks) throws WaddlesException.FileError {
         createSaveDirectory();
         try {
-            FileWriter writer = new FileWriter(SAVE_PATH);
-            for (int i = 1; i <= tasks.getSize(); i++) {
-                writer.write(tasks.getUnchecked(i).toSerializedString());
-                writer.write("\n");
-            }
-            writer.close();
+            saveTasksToFile(tasks);
         } catch (IOException e) {
-            throw new WaddlesException.FileError(String.format("Failed to write to %s (%s)", SAVE_PATH,
-                    e.getMessage()));
+            String errorMessage = String.format("Failed to write to %s (%s)", SAVE_PATH, e.getMessage());
+            throw new WaddlesException.FileError(errorMessage);
         }
     }
 
@@ -66,7 +61,8 @@ public class SaveFile {
             Path directoryPath = Paths.get(SAVE_PATH).getParent();
             Files.createDirectories(directoryPath);
         } catch (IOException e) {
-            throw new WaddlesException.FileError(String.format("Failed to create %s (%s)", SAVE_PATH, e.getMessage()));
+            String errorMessage = String.format("Failed to create %s (%s)", SAVE_PATH, e.getMessage());
+            throw new WaddlesException.FileError(errorMessage);
         }
     }
 
@@ -82,5 +78,17 @@ public class SaveFile {
         } else /* if (Todo.isSerialization(line)) */ {
             return Todo.fromSerializedString(line);
         }
+    }
+
+    /**
+     * Saves tasks to the SAVE_PATH file.
+     */
+    private void saveTasksToFile(Tasks tasks) throws IOException {
+        FileWriter writer = new FileWriter(SAVE_PATH);
+        for (int i = 1; i <= tasks.getSize(); i++) {
+            writer.write(tasks.getUnchecked(i).toSerializedString());
+            writer.write("\n");
+        }
+        writer.close();
     }
 }
